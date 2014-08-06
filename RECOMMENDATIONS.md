@@ -3,6 +3,7 @@ Hsin, here are some recommendations to help you with this project. Just some bes
 * [Bootstrap 3](http://getbootstrap.com/)
 * [Angular UI](http://angular-ui.github.io/) Great directives to go with Bootstrap 3 CSS.
 * [Angular NVD3](https://github.com/cmaurer/angularjs-nvd3-directives)
+* [Angular Fire Yeoman Generator](https://github.com/firebase/generator-angularfire)
 * [Our example using Node to push data into firebase](https://github.com/tewen/nycda-node-firebase-script/tree/master)
 
 Videos & Other Resources
