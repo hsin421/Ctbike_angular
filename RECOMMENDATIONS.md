@@ -8,6 +8,7 @@ Hsin, here are some recommendations to help you with this project. Just some bes
 
 Videos & Other Resources
 * [Angular's Transform Response Pattern](https://egghead.io/lessons/angularjs-transformresponse)
+* [Saving Data to Firebase via Node](https://www.firebase.com/docs/web/guide/saving-data.html)
 
 I think you have chosen the 'right' amount of work for this project. I am impressed by what you have already
 done. Good luck, and don't be shy about reaching out with questions.
