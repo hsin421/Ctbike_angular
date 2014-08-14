@@ -1,0 +1,95 @@
+
+<style> 
+.Manhattan {
+
+	fill: #ddc;
+}
+
+.Queens {
+
+	fill: #EDF7F7;
+}
+
+.Brooklyn {
+
+	fill: #cdc;
+}
+.Bronx { fill: #fff;}
+</style>
+
+<div id="nycbody"></div>
+
+<script>
+
+// var width = 960,
+//     height = 1160;
+
+// var svg = d3.select("#nycbody").append("svg")
+//     .attr("width", width)
+//     .attr("height", height);
+// var projection = d3.geo.mercator()
+//   					.center([-73.94, 40.70])
+//   					.scale(50000)
+//   					.translate([(width) / 2, (height)/2]);
+
+// d3.json("nyc.json", function(error, nyctb) {
+//   if (error) return console.error(error);
+
+//   svg.append("path")
+//       .datum(topojson.feature(nyctb, nyctb.objects.nyc))
+//       .attr("d", d3.geo.path().projection(projection));
+// });
+
+// d3.json("uk.json", function(error, uk) {
+//   if (error) return console.error(error);
+
+//   svg.append("path")
+//       .datum(topojson.feature(uk, uk.objects.subunits))
+//       .attr("d", d3.geo.path().projection(d3.geo.mercator()));
+// });
+var width = 800,
+   height = 700;
+
+var svg = d3.select("#nycbody").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+  d3.json("nyc.json", function(error, nyb) {
+
+  	console.log(nyb)
+
+    var projection = d3.geo.mercator()
+  					.center([-73.94, 40.70])
+  					.scale(250000)
+  					.translate([(width) / 2 + 50, (height)/2 + 120])
+  					//.rotate([0, 5, 0]);
+  					//.rotate([73 + 58 / 60, -48 - 47 / 60]);
+
+	var path = d3.geo.path()
+			.projection(projection);
+
+	var g = svg.append("g");
+
+	g.append("g")
+		.attr("id", "boroughs")
+		.selectAll(".state")
+		.data(nyb.objects.boros.features)
+		.enter().append("path")
+		.attr("class", function(d){ return d.properties.borough; })
+		.attr("d", path);
+
+	svg.append("g")
+    .attr("class", "bubble")
+  	.selectAll("circle")
+    .data(topojson.feature(nyb, nyb.objects.stations).features)
+  	.enter().append("circle")
+  	.attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
+  	.attr("id", function(d){ return "Station_"+d.properties.Station_Id; })
+    .attr("r", 5);
+
+	});
+
+
+
+
+</script>

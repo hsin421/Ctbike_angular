@@ -1,0 +1,100 @@
+<div class="jumbotron">
+  <h1>'Allo, 'Allo!</h1>
+  <p class="lead">
+    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
+    Always a pleasure scaffolding your apps.
+  </p>
+  <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
+</div>
+
+<div class="row marketing">
+  
+
+ <div ng-controller="FirebaseCtrl">
+      <div ng-repeat="(key, data) in value1"<h4> {{data.myInput}}</h4></div>
+      <div class="input-group">
+      <input ng-model="typein" type="text" class="form-control" ng-minlength=5>
+      <span class="input-group-btn">
+      <button class="btn btn-default btn-primary" ng-click="fbwrite()"> Write to Firebase </button></span>
+      </div>
+      </div>
+   
+   <br>
+
+   <form name="signup_form" novalidate ng-submit="signupForm()"> <fieldset>
+  <legend>Signup</legend>
+  <div class="row">
+  <div class="large-12 columns">
+  <label>Your name</label> <input type="text" class="form-control"
+  placeholder="Name" name="name" ng-model="signup.name" ng-minlength=3 ng-maxlength=20 required ng-focus />
+  <div class="error" ng-show="signup_form.name.$dirty && signup_form.name.$invalid && !signup_form.name.$focused">
+  <small class="error" ng-show="signup_form.name.$error.required">
+           Your name is required.
+  </small>
+  <small class="error"
+  ng-show="signup_form.name.$error.minlength">
+             Your name is required to be at least 3 characters
+  </small>
+  <small class="error"
+  ng-show="signup_form.name.$error.maxlength">
+             Your name cannot be longer than 20 characters
+      </small>
+  </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="large-12 columns">
+    <label>Your email</label> <input type="email" class="form-control"
+    placeholder="Email"
+    name="email"
+    ng-model="signup.email"
+    ng-minlength=3 ng-maxlength=20 required ng-focus/>
+    <div class="error"
+    ng-show="signup_form.email.$dirty && signup_form.email.$invalid && !signup_form.email.$focused">
+    <small class="error" ng-show="signup_form.email.$error.required"> Your email is required.
+    </small>
+    <small class="error"
+    ng-show="signup_form.email.$error.minlength">
+    Your email is required to be at least 3 characters
+    </small>
+    <small class="error"
+    ng-show="signup_form.email.$error.email">
+                 That is not a valid email. Please input a valid email.
+    </small>
+    <small class="error" ng-show="signup_form.email.$error.maxlength"> Your email cannot be longer than 20 characters
+      </small>
+    </div>
+  </div>
+    </div>
+     <div class="row">
+    <div class="large-12 columns"> <label>Username</label>
+    <input type="text" placeholder="Desired username" class="form-control"
+    name="username" ng-model="signup.username" ng-minlength=3
+    ng-maxlength=20 ensure-unique="username" required ng-focus/>
+    <div class="error"
+    ng-show="signup_form.username.$dirty && signup_form.username.$invalid && !signup_form.username.$focused">
+    <small class="error" ng-show="signup_form.username.$error.required"> Please input a username
+    </small>
+    <small class="error"
+    ng-show="signup_form.username.$error.minlength">
+                 Your username is required to be at least 3 characters
+    </small>
+    <small class="error"
+    ng-show="signup_form.username.$error.maxlength">
+                 Your username cannot be longer than 20 characters
+    </small>
+    <small class="error"
+    ng-show="signup_form.username.$error.unique">
+                 That username is taken, please try another
+          </small>
+        </div>
+    </div>
+    </div>
+    <br>
+  <button type="submit" ng-disabled="signup_form.$invalid" class="btn btn-default btn-info button radius">Submit</button> </fieldset>
+  </form>
+
+  <br>
+
+
+    
