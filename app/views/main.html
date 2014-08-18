@@ -1,27 +1,38 @@
 <div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
+  <h1 tooltip="Allo!">Dude, Where Is My Bike?</h1>
   <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
+    <img src="images/dock.png" alt="bikedock" height="100px"><br>
+    A study of the ebb and flow of New York's Citi bikers.
   </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
+  <p><a class="btn btn-lg btn-info" ng-href="#/nyctb">Check it out!<span class="glyphicon glyphicon-ok"></span></a></p>
 </div>
 
-<div class="row marketing">
-  
+
 
  <div ng-controller="FirebaseCtrl">
-      <div ng-repeat="(key, data) in value1"<h4> {{data.myInput}}</h4></div>
-      <div class="input-group">
-      <input ng-model="typein" type="text" class="form-control" ng-minlength=5>
+ 
+
+      <div ng-repeat="msg in message"<h4> {{msg.myInput}}</h4>
+      <div class="btn btn-sm" ng-click="toShow = toShow ? false:true "> <i class="fa fa-pencil"></i> </div>
+      <div class="input-group" ng-show="toShow">
+      <input ng-model="msg.myInput" ng-change='message.$save(msg)' type="text" class="form-control">
       <span class="input-group-btn">
-      <button class="btn btn-default btn-primary" ng-click="fbwrite()"> Write to Firebase </button></span>
+      <button class="btn btn-default btn-warning" ng-click="message.$remove(msg)"> Remove </button></span>
       </div>
+      </div>
+      <br>
+<form ng-submit="addMessage(newMessageText)">
+ <div class="input-group">
+      <input ng-model="newMessageText" class="form-control" />
+      <span class="input-group-btn">
+      <button type="submit" class="btn btn-info">New</button></span>
+      </div>
+    </form>
       </div>
    
    <br>
 
-   <form name="signup_form" novalidate ng-submit="signupForm()"> <fieldset>
+  <!--  <form name="signup_form" novalidate ng-submit="signupForm()"> <fieldset>
   <legend>Signup</legend>
   <div class="row">
   <div class="large-12 columns">
@@ -95,6 +106,36 @@
   </form>
 
   <br>
+<div ng-controller="DatepickerDemoCtrl">
+    <pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
 
+    <h4>Inline</h4>
+    <div style="display:inline-block; min-height:290px;">
+        <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
+    </div>
 
-    
+    <h4>Popup</h4>
+    <div class="row">
+        <div class="col-md-6">
+            <p class="input-group">
+              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label>Format:</label> <select class="form-control" ng-model="format" ng-options="f for f in formats"><option></option></select>
+        </div>
+    </div>
+
+    <hr />
+    <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
+    <button type="button" class="btn btn-sm btn-default" ng-click="dt = '2009-08-24'">2009-08-24</button>
+    <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
+    <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" tooltip="After today restriction">Min date</button>
+</div>
+
+     -->

@@ -12,26 +12,11 @@
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="bower_components/nv.d3.css">
-    <script src="https://cdn.firebase.com/js/client/1.0.19/firebase.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
     <!-- endbuild -->
-    <style>
-
-    .d3body {
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      margin: none;
-      
-      width: 760px;
-    }
-
-    #d3button {
-      position: relative;
-      right: 10px;
-      top: 10px;
-    }
-
-  </style>
-  <script src="http://d3js.org/d3.v3.min.js"></script>
+ 
   <script src="http://d3js.org/topojson.v1.min.js"></script>
   </head>
   <body ng-app="yoAngularApp">
@@ -45,9 +30,9 @@
         <ul class="nav nav-pills pull-right">
           <li class="active"><a ng-href="#">Home</a></li>
           <li><a ng-href="#/about">About</a></li>
-          <li><a ng-href="#/nyctb">Citi Bike Data</a></li>
+         
         </ul>
-        <h3 class="text-muted">Sweet</h3>
+        <h3 class="text-muted">Sweet D3</h3>
       </div>
 
       <div ng-view> </div>
@@ -102,6 +87,9 @@
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/lodash/dist/lodash.compat.js"></script>
+    <script src="bower_components/firebase/firebase.js"></script>
+    <script src="bower_components/angularfire/dist/angularfire.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -109,6 +97,7 @@
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/nyctb.js"></script>
         <!-- endbuild -->
 </body>
 </html>
