@@ -132,27 +132,32 @@ app.controller('NyctbCtrl', function ($scope, $firebase, d3Service, $interval) {
             height = 700;
 
 
-        var bwcolor = d3.scale.linear()
-            .domain([5, 9, 15, 18, 23])
-            .range(['grey', 'white', 'white', 'grey', 'black']);
+        // var bwcolor = d3.scale.linear()
+        //     .domain([5, 9, 15, 18, 23])
+        //     .range(['grey', 'white', 'white', 'grey', 'black']);
 
-        var diffcolor = d3.scale.linear()
-            .domain([-7, 0, 7])
-            .range(['red', 'grey', 'green']);
+        // var diffcolor = d3.scale.linear()
+        //     .domain([-7, 0, 7])
+        //     .range(['red', 'grey', 'green']);
 
-
+        $scope.play = undefined;
         $scope.dt = 1000;
         $scope.fforward = function () {
             if ($scope.dt > 300) {
                 $scope.dt = $scope.dt - 300;
-                letsRun($scope.dt);
+                $scope.letsStop();
+                $scope.play = undefined;
+                $scope.letsRun($scope.dt);
+                
             }
         };
 
         $scope.fbackward = function () {
             if ($scope.dt < 2000) {
                 $scope.dt = $scope.dt + 300;
-                letsRun($scope.dt);
+                $scope.letsStop();
+                $scope.play = undefined;
+                $scope.letsRun($scope.dt);
             }
         };
 
@@ -160,10 +165,10 @@ app.controller('NyctbCtrl', function ($scope, $firebase, d3Service, $interval) {
         $scope.playing = false;
 
         $scope.letsStop = function () {
-            if (angular.isDefined(play)) {
-                $interval.cancel(play);
-                play = undefined;
-            }
+           
+            $interval.cancel($scope.play);
+            $scope.play = undefined;
+            
             $scope.playing = false;
         };
 
@@ -178,15 +183,27 @@ app.controller('NyctbCtrl', function ($scope, $firebase, d3Service, $interval) {
 
     $scope.iAmLoaded = function () {
         var d3 = _d3;
+        var radius = d3.scale.sqrt()
+                .domain([0, 60])
+                .range([0, 20]);
+        var bwcolor = d3.scale.linear()
+            .domain([5, 9, 15, 18, 23])
+            .range(['grey', 'white', 'white', 'grey', 'black']);
+
+        var diffcolor = d3.scale.linear()
+            .domain([-7, 0, 7])
+            .range(['red', 'grey', 'green']);
+
+
         var circle_order = [];
         var circles = d3.selectAll('circle.bubbles');
 
         circles[0].forEach(function (e, i, array) {
-            console.log(e);
+            
             circle_order.push(e.id.split('_')[1]);
             //if (e.id.split('_')[1] == 289){console.log(i)};
         });
-        console.log(circle_order);
+       
 
         //This function organizes data from Firebase into corresponding form for D3
         //TODO: simplify to two newarrays instead of four
@@ -218,28 +235,25 @@ app.controller('NyctbCtrl', function ($scope, $firebase, d3Service, $interval) {
         };
         var svg = d3.selectAll('svg');
         var ref = new Firebase('https://luminous-fire-6005.firebaseio.com/Citibike/');
-        var reflimit = ref.limit(100);
+        var reflimit = ref.startAt().limit(500);
         var sync = $firebase(reflimit);
 
         //    reflimit.on('value', function (snapshot) {
         $scope.fbArray = sync.$asArray();
         // console.log($scope.fbArray);
-        var play = undefined;
-        var fb_array = [];
+       
+        //var fb_array = [];
         // for (var k in $scope.fbArray){
         // 	fb_array.push($scope.fbArray[k]) };
         // 	console.log(fb_array);
         // for (a in $scope.fbArray){
         // console.log(value)      }
         $scope.letsRun = function (t) {
-            console.log($scope.fbArray[2]);
+            console.log(reflimit);
             $scope.playing = true;
-            if (angular.isDefined(play)) {
-                play = undefined;
-                $interval.cancel(play);
-                letsRun(t)
-            };
-            play = $interval(function () {
+            if (angular.isDefined($scope.play)) return
+               
+            $scope.play = $interval(function () {
                 var circle_data = data_scrambler($scope.fbArray[$scope.count], $scope.fbArray[$scope.count - 1], circle_order);
                 //console.log([circle_data.data[322].differential,circle_data.data[322].number]);
                 console.log(circle_data);

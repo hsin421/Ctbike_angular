@@ -40,10 +40,10 @@
 
 <div class="panel panel-default">
   <div class="panel-body">
-   <button type="button" class="btn btn-default" ng-click="fbackward()" ng-disabled="dt > 1800"><i class="fa fa-fast-backward"></i></button>
+   <button type="button" class="btn btn-default" ng-click="fbackward()" ng-disabled="dt > 1800 || !playing"><i class="fa fa-fast-backward"></i></button>
    <button type="button" class="btn btn-default" ng-click="letsStop()" ng-disabled="!playing"><i class="fa fa-pause"></i></button>
    <button type="button" class="btn btn-default" ng-click="letsRun(dt)" ng-disabled="playing"><i class="fa fa-play"></i></button>
-   <button type="button" class="btn btn-default" ng-click="fforward()" ng-disabled="dt < 300"><i class="fa fa-fast-forward"></i></button>
+   <button type="button" class="btn btn-default" ng-click="fforward()" ng-disabled="dt < 300 || !playing"><i class="fa fa-fast-forward"></i></button>
    
    <h4> {{dt}} {{playing}} {{count}} </h4>
 
