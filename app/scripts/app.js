@@ -35,7 +35,7 @@ angular.module('d3', [])
         d3: function() { return d.promise; }
       };
 }]);
-;
+
 
 
 angular

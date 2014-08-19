@@ -128,7 +128,7 @@ App.controller('FirebaseCtrl', function ($scope, $firebase){
   $scope.message =  sync.$asArray();
   console.log($scope.message);
    $scope.addMessage = function(text) {
-    $scope.message.$add({myInput: text});
+    $scope.message.$add({myInput: "Hsin: " + text});
   };
   $scope.toggleMe = function(){
     if ($scope.toShow){ $scope.toShow = false}else{$scope.toShow = true};
