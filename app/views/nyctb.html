@@ -39,15 +39,19 @@
 
 
 <div class="panel panel-default">
+<!-- <div class="panel-heading"><i class="fa fa-gamepad fa-lg"> </i> </div> -->
   <div class="panel-body">
    <button type="button" class="btn btn-default" ng-click="fbackward()" ng-disabled="dt > 1800 || !playing"><i class="fa fa-fast-backward"></i></button>
    <button type="button" class="btn btn-default" ng-click="letsStop()" ng-disabled="!playing"><i class="fa fa-pause"></i></button>
-   <button type="button" class="btn btn-default" ng-click="letsRun(dt)" ng-disabled="playing"><i class="fa fa-play"></i></button>
+   <button type="button" class="btn btn-default" ng-click="letsRun(dt)" ng-disabled="playing || !loadingDone"><i class="fa fa-play"></i></button>
    <button type="button" class="btn btn-default" ng-click="fforward()" ng-disabled="dt < 300 || !playing"><i class="fa fa-fast-forward"></i></button>
-   
-   <h4> {{dt}} {{playing}} {{count}} </h4>
+   <small class="pull-right" ng-hide="loadingDone">Weather</small><i class="fa fa-sun-o pull-right fa-2x" id='weather' ng-show="loadingDone"></i>
+   <input type="range" ng-model="countS" min="0" max="2218" ng-disabled="!loadingDone">
 
-   <i class="fa fa-cog fa-3x pull-right fa-spin"></i>
+   <div ng-hide="loadingDone"> <progressbar value="progress">Data Loading...</progressbar> </div>
+  
+   <!-- <i class="fa fa-cog fa-3x pull-right fa-spin"></i> -->
+  
   </div>
 </div>
 <nyct-bike data="nyb" id="nycbody" loaded="iAmLoaded()"></nyct-bike>

@@ -46,7 +46,7 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    //'ui.bootstrap'
+    'ui.bootstrap',
     'firebase',
     'd3'
   ])

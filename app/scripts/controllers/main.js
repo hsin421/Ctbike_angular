@@ -140,6 +140,7 @@ App.controller('FirebaseCtrl', function ($scope, $firebase){
  		
  	// 	ref.push({myInput: $scope.typein});
  	// };
+  setInterval(console.log('hi'),1000);
 
  });
 

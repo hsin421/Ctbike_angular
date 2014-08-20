@@ -64,7 +64,7 @@ app.directive('nyctBike', ['d3Service', function (d3Service) {
 
                 var datetime = svg.append('g')
                     .attr('class', 'datetime')
-                    .attr('transform', 'translate(' + (width - 700) + ',' + (height - 750) + ')')
+                    .attr('transform', 'translate(' + (width - 800) + ',' + (height - 750) + ')')
                     .selectAll('g')
                     .data(['Datetime'])
                     .enter().append('g');
@@ -122,7 +122,7 @@ app.directive('nyctBike', ['d3Service', function (d3Service) {
     }
 }]);
 
-app.controller('NyctbCtrl', function ($scope, $firebase, d3Service, $interval) {
+app.controller('NyctbCtrl', function ($scope, $firebase, d3Service, $interval, $timeout, $http,$q) {
 
     var _d3;
 
@@ -130,15 +130,6 @@ app.controller('NyctbCtrl', function ($scope, $firebase, d3Service, $interval) {
         _d3 = d3;
         var width = 800,
             height = 700;
-
-
-        // var bwcolor = d3.scale.linear()
-        //     .domain([5, 9, 15, 18, 23])
-        //     .range(['grey', 'white', 'white', 'grey', 'black']);
-
-        // var diffcolor = d3.scale.linear()
-        //     .domain([-7, 0, 7])
-        //     .range(['red', 'grey', 'green']);
 
         $scope.play = undefined;
         $scope.dt = 1000;
@@ -162,7 +153,12 @@ app.controller('NyctbCtrl', function ($scope, $firebase, d3Service, $interval) {
         };
 
         $scope.count = 0;
+        $scope.countS= "0";
+        $scope.$watch("countS", function() { $scope.count = parseInt($scope.countS)});
+        $scope.$watch("count", function() { $scope.countS = $scope.count.toString() });
         $scope.playing = false;
+        $scope.progress = 0;
+        $scope.loadingDone = false;
 
         $scope.letsStop = function () {
            
@@ -212,7 +208,8 @@ app.controller('NyctbCtrl', function ($scope, $firebase, d3Service, $interval) {
             var newarray2 = [];
             var newarray3 = [];
             var newarray4 = [];
-            var timestamp = firebase_array1[firebase_array1.length - 1].substring(0, 16);
+            var timestamp = firebase_array1[firebase_array1.length - 1];
+            var complete_time = moment(timestamp).format('dddd')+", " +moment(timestamp).format('MMMM Do YYYY, h:mm:ss a');
             order.forEach(function (e, i, a) {
                 newarray1.push(firebase_array1[e])
             });
@@ -231,32 +228,62 @@ app.controller('NyctbCtrl', function ($scope, $firebase, d3Service, $interval) {
             newarray1.forEach(function (e, i, a) {
                 newarray3.push({number: e, differential: newarray4[i]})
             });
-            return { data: newarray3, time: timestamp, hour: timestamp.substring(11, 13)}
+            return { data: newarray3, time: complete_time, hour: timestamp.substring(11, 13), timestamp: timestamp}
+        };
+        var nextHour = 0;
+        function weatherFetcher (timestamp, hour){
+          var deferred = $q.defer();
+          if (nextHour != hour && hour % 2 === 1){
+            nextHour = hour
+            var unixTime = moment(timestamp).unix();
+            var weatherUrl = 'http://api.openweathermap.org/data/2.5/history/city?id=5128581&type=hour&start='+unixTime+'&cnt=1';
+            $http.get(weatherUrl)
+            .success(function(data) {
+         	 deferred.resolve(data['list'][0]['weather'][0]['id']);  })
+			.error(function(reason) { deferred.reject(reason);})
+
+			return deferred.promise    }else{
+				deferred.resolve(700);
+				return deferred.promise
+			}
+        };
+        function weatherIconAppender (weather_id){
+        	var weatherNumber = parseInt(weather_id);
+        	if (weatherNumber < 700){
+        		//append umbrella icon
+        		$('#weather').removeClass('fa-sun-o').removeClass('fa-cloud').addClass('fa-umbrella');
+        	}else if (weatherNumber > 700 && weatherNumber != 800){
+        		//append cloud icon
+        		$('#weather').removeClass('fa-sun-o').removeClass('fa-umbrella').addClass('fa-cloud');
+        	}else if (weatherNumber === 800){
+        		//append sun icon
+        		$('#weather').removeClass('fa-cloud').removeClass('fa-umbrella').addClass('fa-sun-o');
+        	}
         };
         var svg = d3.selectAll('svg');
         var ref = new Firebase('https://luminous-fire-6005.firebaseio.com/Citibike/');
-        var reflimit = ref.startAt().limit(500);
+        var reflimit = ref.startAt().endAt();
         var sync = $firebase(reflimit);
 
         //    reflimit.on('value', function (snapshot) {
         $scope.fbArray = sync.$asArray();
-        // console.log($scope.fbArray);
-       
-        //var fb_array = [];
-        // for (var k in $scope.fbArray){
-        // 	fb_array.push($scope.fbArray[k]) };
-        // 	console.log(fb_array);
-        // for (a in $scope.fbArray){
-        // console.log(value)      }
+        console.log($scope.fbArray.length);
+        $interval(function() {
+        	if ($scope.fbArray.length === 0){ 
+        		if ($scope.progress < 70){$scope.progress += 15 }else{$scope.progress += 1}
+        			}else{ $scope.progress = 100;
+        				$timeout(function(){$scope.loadingDone = true}, 800)}
+        }, 1000, 22);
+        
         $scope.letsRun = function (t) {
-            console.log(reflimit);
+            console.log($scope.fbArray);
             $scope.playing = true;
             if (angular.isDefined($scope.play)) return
                
             $scope.play = $interval(function () {
                 var circle_data = data_scrambler($scope.fbArray[$scope.count], $scope.fbArray[$scope.count - 1], circle_order);
                 //console.log([circle_data.data[322].differential,circle_data.data[322].number]);
-                console.log(circle_data);
+                //console.log(circle_data);
                 circles.data(circle_data.data);
                 circles.transition(t).attr('r', function (d) {
                     return radius(d.number)
@@ -265,13 +292,15 @@ app.controller('NyctbCtrl', function ($scope, $firebase, d3Service, $interval) {
                     return 'fill:' + diffcolor(d.differential)
                 });
                 svg.attr('style', 'background-color:' + bwcolor(circle_data.hour));
+                var weatherPromise = weatherFetcher(circle_data.timestamp, circle_data.hour);
+                weatherPromise.then(function(id){weatherIconAppender(id)},function(reason){console.log('Weather fetching failed: '+ reason)});
                 d3.selectAll('g.datetime text').text(circle_data.time);
-                if ($scope.count === 999) {
+                if ($scope.count === 2218) {
                     $scope.count = 0
                 } else {
                     $scope.count += 1
                 };
-            }, t, 1000);
+            }, t);
         };
     };
 });
