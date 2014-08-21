@@ -17,7 +17,7 @@
 
     <!-- endbuild -->
   
-  <script src="http://d3js.org/topojson.v1.min.js"></script>
+ 
   </head>
   <body ng-app="yoAngularApp">
     <!--[if lt IE 7]>
@@ -30,16 +30,16 @@
         <ul class="nav nav-pills pull-right">
           <li class="active"><a ng-href="#">Home</a></li>
           <li><a ng-href="#/about">About</a></li>
-         
+          <li><a ng-href="http://nyctbike.me">Find a Bike</a></li>
         </ul>
-        <h3 class="text-muted">Sweet D3</h3>
+        <h3 class="text-muted">Visual Citibiking</h3>
       </div>
 
       <div ng-view> </div>
      
 
       <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from Hsin.H</p>
+        <p><span class="glyphicon glyphicon-heart"></span> from <a href="hsin.cool">Hsin.H<a></p>
       </div>
     </div>
 
@@ -92,6 +92,7 @@
     <script src="bower_components/firebase-simple-login/firebase-simple-login.js"></script>
     <script src="bower_components/angularfire/dist/angularfire.min.js"></script>
     <script src="bower_components/momentjs/moment.js"></script>
+    <script src="bower_components/topojson/topojson.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -101,6 +102,6 @@
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/nyctb.js"></script>
         <!-- endbuild -->
-        <script src="bower_components/bootstrap-ui/ui-bootstrap-tpls-0.9.0.min.js"></script>
+        
 </body>
 </html>

@@ -126,9 +126,10 @@ App.controller('FirebaseCtrl', function ($scope, $firebase){
 
  // var syncObject = sync.$asArray();
   $scope.message =  sync.$asArray();
-  console.log($scope.message);
+  $scope.username = "";
    $scope.addMessage = function(text) {
-    $scope.message.$add({myInput: "Hsin: " + text});
+    $scope.message.$add({myInput: $scope.username + ": " + text});
+    $scope.newMessageText = "";
   };
   $scope.toggleMe = function(){
     if ($scope.toShow){ $scope.toShow = false}else{$scope.toShow = true};
@@ -140,7 +141,7 @@ App.controller('FirebaseCtrl', function ($scope, $firebase){
  		
  	// 	ref.push({myInput: $scope.typein});
  	// };
-  setInterval(console.log('hi'),1000);
+  
 
  });
 
