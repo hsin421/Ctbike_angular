@@ -43,7 +43,7 @@
   <div class="panel-body">
    <button type="button" class="btn btn-default" ng-click="fbackward()" ng-disabled="dt > 1800 || !playing"><i class="fa fa-fast-backward"></i></button>
    <button type="button" class="btn btn-default" ng-click="letsStop()" ng-disabled="!playing"><i class="fa fa-pause"></i></button>
-   <button type="button" class="btn btn-default" ng-click="letsRun(dt)" ng-disabled="playing || !loadingDone"><i class="fa fa-play"></i></button>
+   <button type="button" class="btn btn-default" ng-click="letsRun(dt)" popover="Click to play!" popover-trigger="mouseenter" Popover-animation="true" ng-disabled="playing || !loadingDone"><i class="fa fa-play"></i></button>
    <button type="button" class="btn btn-default" ng-click="fforward()" ng-disabled="dt < 300 || !playing"><i class="fa fa-fast-forward"></i></button>
    <text class="pull-right" ng-hide="loadingDone">Weather</text><i class="fa fa-sun-o pull-right fa-2x" id='weather' ng-show="loadingDone"></i>
    <input type="range" ng-model="countS" min="0" max="2218" ng-disabled="!loadingDone">
@@ -55,4 +55,6 @@
   </div>
 </div>
 <nyct-bike data="nyb" id="nycbody" loaded="iAmLoaded()"></nyct-bike>
+
+
 

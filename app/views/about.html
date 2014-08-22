@@ -1,120 +1,18 @@
 
 
-<div class="d3body"> <button id="d3button" class="btn btn-info" onclick="transition()">Transition</button></div>
+<div class="page-header">
+  <h1>About Visual Citibiking </h1>
+</div>
 
-<div id="chart" style="width:760px"> <svg style="height:650px;width:100%"> </svg></div>
-<script>
+<p> Did you know that given the right location and distance in New York City, a Citi bike will win a race with any other form of transportation? Everyday thousands of New Yorkers embark on the hippest way of travel in the city, burning body fat instead of fuel. This is a vibrant community whoes members refuse to be constrainted by the bus or subway schedule.  </p>
 
-// var n = 100, // number of layers
-//     m = 200, // number of samples per layer
-//     stack = d3.layout.stack().offset("wiggle"),
-//     layers0 = stack(d3.range(n).map(function() { return bumpLayer(m); })),
-//     layers1 = stack(d3.range(n).map(function() { return bumpLayer(m); }));
-//     //console.log(layers0)
-// var width = 760,
-//     height = 650;
+<p> That is, until their bike stations run out of bikes. Being forced to stare at empty bike docks enough times has aroused a data nerd like myself to ask the question: who took my bikes and where were they taken (were they treated nicely)? Hence a website is born trying to provide an answer. In case it is not self-evident, the idea is to draw a bubble map with the bubble size representing the available bike number at each station. Red and green colors were added to visually convey the rate with which the numbers are changing - the redder, the more rapidly it's decreasing, and vice versa. Timestamp and weather icons provide a sense of how many bikers may or may not turn out on that date. The data displayed were from July 29 to August 8, 2014. More data were collected but weren't displayed for perfomance reasons. </p>
 
-// var x = d3.scale.linear()
-//     .domain([0, m - 1])
-//     .range([0, width]);
+<p>Ok, now on to the the answer you've been waiting for... Yes, most people do bike to work in Midtown and Financial District (shocking discovery!). The truth is clear now that Citibike did not pack up all my bikes every morning and ship them to Bronx to create a feeling of heavy usage. Mission accomplished.  </p>
 
-// var y = d3.scale.linear()
-//     .domain([0, d3.max(layers0.concat(layers1), function(layer) { return d3.max(layer, function(d) { return d.y0 + d.y; }); })])
-//     .range([height, 0]);
+<p> Lastly, I'm grateful for folks at <a ng-href="http://nycda.com"> NYCDA </a> for their help on this project. This site is built with D3 on AngularJS, with which I was unfamiliar at the beginning of the project. The data were collected from <a ng-href="http://citibikenyc.com">Citibike</a> via a Ruby script on AWS, injected to Firebase by a Node script. It has been a fun past few weeks tinkering with two of the most powerful technologies on the web. I hope you enjoy staring at the colorful trembling bubbles as much as I do. Please let me know if my map has brought back your happy memories of playing Sim City, that'd be my ultimate satisfaction. </p>
 
-// var color = d3.scale.linear()
-//     .range(["#aad", "#656"]);
-
-// var area = d3.svg.area()
-//     .x(function(d) { return x(d.x); })
-//     .y0(function(d) { return y(d.y0); })
-//     .y1(function(d) { return y(d.y0 + d.y); });
-
-// var svg = d3.select(".d3body").append("svg")
-//     .attr("width", width)
-//     .attr("height", height);
-
-// svg.selectAll("path")
-//     .data(layers0)
-//   .enter().append("path")
-//     .attr("d", area)
-//     .style("fill", function() { return color(Math.random()); });
-
-// function transition() {
-//   d3.selectAll("path")
-//       .data(function() {
-//         var d = layers1;
-//         layers1 = layers0;
-//         return layers0 = d;
-//       })
-//     .transition()
-//       .duration(2500)
-//       .attr("d", area);
-// }
-
-// // Inspired by Lee Byron's test data generator.
-// function bumpLayer(n) {
-
-//   function bump(a) {
-//     var x = 1 / (.1 + Math.random()),
-//         y = 2 * Math.random() - .5,
-//         z = 10 / (.1 + Math.random());
-//     for (var i = 0; i < n; i++) {
-//       var w = (i / n - y) * z;
-//       a[i] += x * Math.exp(-w * w);
-//     }
-//   }
-
-//   var a = [], i;
-//   for (i = 0; i < n; ++i) a[i] = 0;
-//   for (i = 0; i < 5; ++i) bump(a);
-//   return a.map(function(d, i) { return {x: i, y: Math.max(0, d)}; });
-// }
-// /*Data sample:
-// { 
-//       "key" : "North America" , 
-//       "values" : [ [ 1025409600000 , 23.041422681023] , [ 1028088000000 , 19.854291255832],
-//        [ 1030766400000 , 21.02286281168], 
-//        [ 1033358400000 , 22.093608385173],
-//        [ 1036040400000 , 25.108079299458],
-//        [ 1038632400000 , 26.982389242348]
-//        ...
-
-// */
-// d3.json('stackedAreaData.json', function(data) {
-//   nv.addGraph(function() {
-//     var chart = nv.models.stackedAreaChart()
-//                   .margin({right: 50})
-//                   .x(function(d) { return d[0] })   //We can modify the data accessor functions...
-//                   .y(function(d) { return d[1] })   //...in case your data is formatted differently.
-//                   .useInteractiveGuideline(true)    //Tooltips which show all data points. Very nice!
-//                   .rightAlignYAxis(true)      //Let's move the y-axis to the right side.
-//                   .transitionDuration(500)
-//                   .showControls(true)       //Allow user to choose 'Stacked', 'Stream', 'Expanded' mode.
-//                   .clipEdge(true);
-
-//     //Format x-axis labels with custom function.
-//     chart.xAxis
-//         .tickFormat(function(d) { 
-//           return d3.time.format('%x')(new Date(d)) 
-//     });
-
-//     chart.yAxis
-//         .tickFormat(d3.format(',.2f'));
-
-//     d3.select('#chart svg')
-//       .datum(data)
-//       .call(chart);
-
-//     nv.utils.windowResize(chart.update);
-
-//     return chart;
-//   });
-// })
-
-
+<script> 
+$('#nav-home').removeClass('active');
+$('#nav-about').addClass('active');
 </script>
-
-
-
-  

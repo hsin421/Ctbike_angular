@@ -14,15 +14,13 @@
        <div class="page-header">
         <h3>Leave a comment  <i class="fa fa-comment fa-lg"></i></h3>
       </div>
-      <div ng-repeat="msg in message"><h4> {{msg.myInput}}</h4>
-      <div class="btn btn-sm" ng-click="toShow = toShow ? false:true "> <i class="fa fa-pencil"></i> </div>
-  
+      <div ng-repeat="msg in message"> <h4> {{msg.myInput}} <div class="btn btn-sm" ng-click="toShow = toShow ? false:true "> <i class="fa fa-pencil"></i> </div></h4>
+      
       <div class="input-group" ng-show="toShow">
       <input ng-model="msg.myInput" ng-change='message.$save(msg)' type="text" class="form-control" ng-keydown="toShow = $event.keyCode === 13 ? false: true">
       <span class="input-group-btn">
       <button class="btn btn-default btn-warning" ng-click="message.$remove(msg)"> Remove </button></span>
       </div>
-  
       </div>
       <br>
 <form ng-submit="addMessage(newMessageText)">
@@ -37,6 +35,10 @@
       </div>
    
    <br>
+   <script> 
+$('#nav-about').removeClass('active');
+$('#nav-home').addClass('active');
+</script>
 
   <!--  <form name="signup_form" novalidate ng-submit="signupForm()"> <fieldset>
   <legend>Signup</legend>
