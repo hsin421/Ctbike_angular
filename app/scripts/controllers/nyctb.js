@@ -209,7 +209,8 @@ app.controller('NyctbCtrl', function ($scope, $firebase, d3Service, $interval, $
             var newarray3 = [];
             var newarray4 = [];
             var timestamp = firebase_array1[firebase_array1.length - 1];
-            var complete_time = moment(timestamp).format('dddd')+", " +moment(timestamp).format('MMMM Do YYYY, h:mm:ss a');
+            var complete_time = moment(timestamp.substring(0,19)).format('dddd')+", " +moment(timestamp.substring(0,19)).format('MMMM Do YYYY, h:mm:ss a');
+            
             order.forEach(function (e, i, a) {
                 newarray1.push(firebase_array1[e])
             });
