@@ -8,9 +8,10 @@
  * Controller of the yoAngularApp
  */
 
-var app = angular.module('yoAngularApp');
+/* @FINALPROJECTCOMMENT, All in all, this file is pretty messy, could use some serious refactoring */
 
-app.directive('nyctBike', ['d3Service', function (d3Service) {
+/* @FINALPROJECTCOMMENT, This is a better module syntax than declaring the 'app' var */
+angular.module('yoAngularApp').directive('nyctBike', ['d3Service', function (d3Service) {
     function link(scope, el, attr) {
         d3Service.d3().then(function (d3) {
             var width = 800,
@@ -120,9 +121,8 @@ app.directive('nyctBike', ['d3Service', function (d3Service) {
         restrict: 'EAC',
         scope: { data: '=', loaded: '&' }
     }
-}]);
-
-app.controller('NyctbCtrl', function ($scope, $firebase, d3Service, $interval, $timeout, $http,$q) {
+}]).controller('NyctbCtrl', function ($scope, $firebase, d3Service, $interval, $timeout, $http,$q) {
+    /* @FINALPROJECTCOMMENT, This should really be broken out into a different file */
 
     var _d3;
 
